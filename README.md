@@ -13,10 +13,13 @@ Mrembo is a skincare safety app that allows users to check skincare products and
 - Warnings for harmful or banned ingredients
 
 ## Tech Stack
-- Frontend: React Native (Expo)
-- Backend: TBD
-- Database: TBD
+- Frontend: React (Vite)
+- Routing: React Router
+- State Management: Context API
+- Backend: Node.js + Express
+- Database: MongoDB Atlas + Mongoose
 - Version Control: Git & GitHub
+
 
 ## Setup Steps
 1. Clone the repository
