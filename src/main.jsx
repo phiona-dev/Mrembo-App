@@ -7,11 +7,17 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router'
+import { AuthProvider } from './context/AuthContext.jsx'
+import { UIProvider } from './context/UIContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <AuthProvider>
+        <UIProvider>
+            <App />
+        </UIProvider>
+      </AuthProvider>
     </BrowserRouter>
   </StrictMode>,
 )
