@@ -1,3 +1,4 @@
+import "./auth.css";
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import axios from 'axios';
@@ -62,35 +63,39 @@ const Signup = () => {
 
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Signup</h2>
+    <div className="page">
+      <div className="container">
+        <div className="heading">Sign In</div>
+        <form onSubmit={handleSubmit}>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <div>
-        <label>Name: </label>
-        <input type="text" value={name} onChange={handleNameChange} required></input>
-      </div>
+          <div>
+            <label>Name: </label>
+            <input type="text" value={name} onChange={handleNameChange} required></input>
+          </div>
 
-      <div>
-        <label>Email: </label>
-        <input type="email" id="email" value={email} onChange={handleEmailChange} required></input>
-      </div>
+          <div>
+            <label>Email: </label>
+            <input type="email" id="email" value={email} onChange={handleEmailChange} required></input>
+          </div>
 
-      <div>
-        <label>Password: </label>
-        <input type="password" id="password" value={password} onChange={handlePasswordChange} required></input>
-      </div>
+          <div>
+            <label>Password: </label>
+            <input type="password" id="password" value={password} onChange={handlePasswordChange} required></input>
+          </div>
 
-      <div>
-        <label>Confirm password: </label>
-        <input type="password" id="confirm-password" value={confirmPassword} onChange={handleConfirmPasswordChange} required></input>
+          <div>
+            <label>Confirm password: </label>
+            <input type="password" id="confirm-password" value={confirmPassword} onChange={handleConfirmPasswordChange} required></input>
+          </div>
+          <div>
+            <button type="submit">SignUp</button>
+            <p>Already have an account? <span style={{ color: "blue", cursor:"pointer"}} onClick={() => navigate("/login")}>Login</span></p>
+          </div>
+        </form>
       </div>
-      <div>
-        <button type="submit">SignUp</button>
-        <p>Already have an account? <span style={{ color: "blue", cursor:"pointer"}} onClick={() => navigate("/login")}>Login</span></p>
-      </div>
-    </form>
+    </div>
   )
 }
 
