@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import AppPage from './pages/App'
 import PrivateRoute from './components/PrivateRoute'
+import Profile from './pages/Profile'
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="profile" element={<Profile />} />
         <Route path="/app" element={
           <PrivateRoute>
             <AppPage />
