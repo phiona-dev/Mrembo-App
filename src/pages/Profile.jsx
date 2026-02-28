@@ -1,33 +1,45 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router';
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
 
 const Profile = () => {
-    const [user, setUser] = useState("");
-    const navigate = useNavigate();
-    useEffect(() => {
-        const storedUser = localStorage.getItem("user");
+  const navigate = useNavigate();
 
-        if (storedUser) {
-            setUser(JSON.parse(storedUser))
-        }
-    },[])
+  const [user] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    const token = localStorage.getItem("token");
 
-    const handleLogout = () => {
-        setUser(null);
-        localStorage.removeItem("user");
-        navigate("/login");
+    if (!storedUser || !token) {
+      return null;
     }
-    
+
+    return JSON.parse(storedUser);
+  });
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
-    <div>
-        <h2>Profile</h2>
-        <p>Hi {user.name} ! Welcome to Mrembo</p>
-        <p>{user.email}</p>
-        <div>
-            <button onClick={handleLogout}>Logout</button>
+    <div className="page">
+        <div className="container">
+            <h2 className="heading">My Profile</h2>
+            <div className="profile-info">
+                <p className="welcome">Hi {user.name}! Welcome to Mrembo</p>
+                <div className="info-card">
+                    <span>Email</span>
+                    <p>{user.email}</p>
+                </div>
+            </div>
+            <button className="logout-btn" onClick={handleLogout}>Logout</button>
         </div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

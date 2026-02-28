@@ -124,3 +124,37 @@ button:hover {
 .login-text span:hover {
   text-decoration: underline;
 }
+
+/*PROFILE STYLES*/
+
+.profile-info {
+  margin-top: 25px;
+}
+
+.welcome {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.info-card {
+  background: white;
+  padding: 18px;
+  border-radius: 20px;
+  box-shadow: #cff0ff 0px 10px 10px -5px;
+  margin-bottom: 15px;
+  border: 2px solid transparent;
+  transition: 0.2s ease;
+}
+
+.info-card span {
+  font-size: 13px;
+  color: #888;
+}
+
+.info-card p {
+  margin: 5px 0 0 0;
+  font-weight: 500;
+  color: #555
+}
