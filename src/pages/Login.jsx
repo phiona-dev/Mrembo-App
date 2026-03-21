@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import "./auth.css";
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  //const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -20,30 +22,41 @@ const Login = () => {
  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    //setError("");
+
+    if (loading) return //prevent double submit
 
     if (!email || !password) {
-      setError("All fields are required!")
+      toast.error("All fields are required!")
       return;
     }
 
     try {
+      setLoading(true);
+
       const response = await axios.post("http://localhost:3000/auth/login", {email, password})
 
       const data = response.data;
 
       if (response.status === 200) {
         localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user))
-        navigate("/app")
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        toast.success("Login successful!");
+
+        setTimeout(() => {
+          navigate("/app")
+        }, 1000)
       
       }
     } catch (err) {
       if (err.response && err.response.data.message) {
-        setError(err.response.data.message)
+        toast.error(err.response.data.message)
       } else {
-        setError("An error occurred. Please try again.")
+        toast.error("An error occurred. Please try again.")
       }
+    } finally {
+      setLoading(false);
     }
   }
   return (
@@ -52,8 +65,6 @@ const Login = () => {
         <div className="heading">Login</div>
 
         <form onSubmit={handleSubmit}>
-
-          {error && <p style={{ color: "red" }}>{error}</p>}
 
           <div>
             <label>Email: </label>
@@ -64,7 +75,9 @@ const Login = () => {
             <input type="password" id="password" value={password} onChange={handlePasswordChange} required></input>
           </div>
           <div>
-            <button type="submit">Login</button>
+            <button type="submit" disabled={loading} className="auth-btn">
+              {loading ? "Logging in..." : "Login"}
+            </button>
             <p>Don't have an account yet? <span style={{ color: "blue", cursor: "pointer"}} onClick={() => navigate("/signup")}>SignUp</span></p>
           </div>
         </form>

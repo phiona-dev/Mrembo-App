@@ -2,15 +2,18 @@
 //shows app structure and routing(what page shows at what url)
 
 import React from 'react'
-import { Router, Routes, Route } from 'react-router'
+import { Routes, Route } from 'react-router'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import AppPage from './pages/App'
 import PrivateRoute from './components/PrivateRoute'
 import Profile from './pages/Profile'
+import { ToastContainer } from 'react-toastify'
 
 const App = () => {
   return (
+    <>
+      <ToastContainer/>
     
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -21,8 +24,10 @@ const App = () => {
             <AppPage />
           </PrivateRoute>
           }
-          />
+        />
+        
       </Routes>
+    </>
     
   )
 }
