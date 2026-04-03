@@ -9,6 +9,7 @@ import AppPage from './pages/App'
 import PrivateRoute from './components/PrivateRoute'
 import Profile from './pages/Profile'
 import { ToastContainer } from 'react-toastify'
+import Categories from './pages/Categories'
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+        <Route path="/categories" element={<PrivateRoute><Categories /></PrivateRoute>} />
         <Route path="/app" element={
           <PrivateRoute>
             <AppPage />
