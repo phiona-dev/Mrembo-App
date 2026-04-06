@@ -59,6 +59,22 @@ router.get("/products/:id", authMiddleware, async(req,res) =>{
     }
 })
 
+//get a single product filtered by category
+router.get("/products", authMiddleware, async(req,res) =>{
+    try {
+      const { categoryId } = req.query;
+      const products = await Product.find({ categoryId }).populate("categoryId");
+      if (!products || products.length === 0){
+        return res.status(404).json({ message: "No products found."})
+      }
+      return res.status(200).json(products)
+
+    }catch(error){
+        console.error(error);
+        return res.status(500).json({ message: "Server error" })
+    }
+})
+
 //update product
 router.put("/products/:id", authMiddleware, async(req,res) =>{
     try {

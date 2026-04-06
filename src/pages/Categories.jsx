@@ -5,14 +5,18 @@ import axios from 'axios';
 
 const Categories = () => {
     const [categories, setCategories] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [products, setProducts] = useState([]);
+    const [categoriesLoading, setCategoriesLoading] = useState(true);
+    const [productsLoading, setProductsLoading] = useState(false);
+    const [categoriesError, setCategoriesError] = useState(null);
+    const [productsError, setProductsError] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(null);
 
+    const token = localStorage.getItem("token");
+
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchCategories = async () => {
            try{
-                const token = localStorage.getItem("token");
                 const response = await axios.get("http://localhost:3000/categories", {
                     headers: { Authorization: token ? `Bearer ${token}` : ""}
                 });
@@ -20,23 +24,36 @@ const Categories = () => {
                 const result = response.data;
                 setCategories(result);
            } catch(err){
-            setError(err.response?.data?.message || err.message);
+            setCategoriesError(err.response?.data?.message || err.message);
            } finally {
-            setLoading(false);
+            setCategoriesLoading(false);
            }
         }
-        fetchData();
+        fetchCategories();
 
-    }, [])
+    }, [token])
 
-    const handleClick = (id) => {
-        if (selectedCategory === id){
-            setSelectedCategory(null); //deselect if same card
-        } else {
+    const handleClick = async (id) => {
+        try {
+            if (selectedCategory === id){
+                setSelectedCategory(null); //deselect if same card
+                setProducts([]); //clear products
+                return
+            }
             setSelectedCategory(id); //select a new card
-        }
+            setProducts([]);
+            setProductsLoading(true);
+            setProductsError(null);
 
-        alert("Card Clicked")
+            const response = await axios.get(`http://localhost:3000/products?categoryId=${id}`, {
+                headers: { Authorization: token ? `Bearer ${token}` : ""}
+            })
+            setProducts(response.data);
+        } catch(err){
+            setProductsError(err.response?.data?.message || err.message);
+        } finally {
+            setProductsLoading(false);
+        }
     }
 
   return (
@@ -49,13 +66,14 @@ const Categories = () => {
                 <button type='submit'>Search</button>
             </div>
         </section>
+
         <section className='categories-body'>
-            {loading && <p>Loading categories...</p>}
-            {error && <p>Error: {error} </p>}
-            {!loading && !error && categories.length === 0 && (
+            {categoriesLoading && <p>Loading categories...</p>}
+            {categoriesError && <p>Error: {categoriesError} </p>}
+            {!categoriesLoading && !categoriesError && categories.length === 0 && (
                 <p>No categories available.</p>
             )}
-            {!loading && !error && categories.length > 0 && (
+            {!categoriesLoading && !categoriesError && categories.length > 0 && (
                 <div className='categories-grid'>
                 {categories.map((item) => (
                     <div className={`card ${selectedCategory === item._id ? "active" : ""}`} key={item._id} onClick={() =>handleClick(item._id)}>
@@ -65,6 +83,28 @@ const Categories = () => {
                 </div>
             )}
         </section>
+
+        {selectedCategory && (
+            <section className='products-body'>
+                <h3>
+                    Products for {categories.find(c => c._id === selectedCategory)?.categoryName}
+                </h3>
+                {productsLoading && <p>Loading products...</p>}
+                {productsError && <p>Error: {productsError}</p>}
+                {!productsLoading && !productsError && products.length === 0 && (<p>No products found.</p>)}
+                {!productsLoading && !productsError && products.length > 0 && (
+                <div className='products-grid'>
+                        {products.map((product) => (
+                            <div className='product-card' key={product._id}>
+                                <h4>{product.productName}</h4>
+                                <p>{product.brand}</p>
+                            </div>
+                        ))}
+                    </div> 
+                )}
+            
+            </section>
+        )}
     </div>
   )
 }
