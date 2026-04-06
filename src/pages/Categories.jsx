@@ -7,6 +7,7 @@ const Categories = () => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,6 +29,16 @@ const Categories = () => {
 
     }, [])
 
+    const handleClick = (id) => {
+        if (selectedCategory === id){
+            setSelectedCategory(null); //deselect if same card
+        } else {
+            setSelectedCategory(id); //select a new card
+        }
+
+        alert("Card Clicked")
+    }
+
   return (
     <div>
         <section className='header'>
@@ -47,7 +58,7 @@ const Categories = () => {
             {!loading && !error && categories.length > 0 && (
                 <div className='categories-grid'>
                 {categories.map((item) => (
-                    <div className='card' key={item._id}>
+                    <div className={`card ${selectedCategory === item._id ? "active" : ""}`} key={item._id} onClick={() =>handleClick(item._id)}>
                         <h2 className='card-title'>{item.categoryName}</h2>
                     </div>
                 ))}

@@ -90,7 +90,7 @@ const Signup = () => {
             <input type="password" id="confirm-password" value={confirmPassword} onChange={handleConfirmPasswordChange} required></input>
           </div>
           <div>
-            <button type="submit">SignUp</button>
+            <button type="submit" className="auth-btn">SignUp</button>
             <p>Already have an account? <span style={{ color: "blue", cursor:"pointer"}} onClick={() => navigate("/login")}>Login</span></p>
           </div>
         </form>

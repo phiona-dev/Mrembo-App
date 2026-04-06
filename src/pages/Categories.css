@@ -1,5 +1,21 @@
 .categories-grid{
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    gap: 10px;
+    border: 1 px solid #ccc;
+    gap: 40px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.card{
+    cursor: pointer;
+    transition: 0.3s;
+}
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card:active{
+    border: 2px solid #9DC183;
+    /*background-color: #F3EBDD;*/
 }
