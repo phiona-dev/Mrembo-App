@@ -31,7 +31,7 @@ router.post("/products", authMiddleware, async(req,res) =>{
     }
 })
 
-//get all products
+/*get all products
 router.get("/products", authMiddleware, async(req,res) =>{
     try {
        const products = await Product.find().populate("categoryId");
@@ -42,7 +42,7 @@ router.get("/products", authMiddleware, async(req,res) =>{
         return res.status(500).json({ message: "Server error" })
     }
 })
-
+*/
 //get a single product
 router.get("/products/:id", authMiddleware, async(req,res) =>{
     try {
@@ -63,6 +63,7 @@ router.get("/products/:id", authMiddleware, async(req,res) =>{
 router.get("/products", authMiddleware, async(req,res) =>{
     try {
       const { categoryId } = req.query;
+      
       const products = await Product.find({ categoryId }).populate("categoryId");
       if (!products || products.length === 0){
         return res.status(404).json({ message: "No products found."})
