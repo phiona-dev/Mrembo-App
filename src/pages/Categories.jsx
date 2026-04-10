@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./Categories.css";
 import axios from 'axios';
+import Card from '../components/Card';
 
 
 const Categories = () => {
@@ -76,7 +77,7 @@ const Categories = () => {
             {!categoriesLoading && !categoriesError && categories.length > 0 && (
                 <div className='categories-grid'>
                 {categories.map((item) => (
-                    <div className={`card ${selectedCategory === item._id ? "active" : ""}`} key={item._id} onClick={() =>handleClick(item._id)}>
+                    <div className={`category-card ${selectedCategory === item._id ? "active" : ""}`} key={item._id} onClick={() =>handleClick(item._id)}>
                         <h2 className='card-title'>{item.categoryName}</h2>
                     </div>
                 ))}
@@ -95,10 +96,11 @@ const Categories = () => {
                 {!productsLoading && !productsError && products.length > 0 && (
                 <div className='products-grid'>
                         {products.map((product) => (
-                            <div className='product-card' key={product._id}>
-                                <h4>{product.productName}</h4>
-                                <p>{product.brand}</p>
-                            </div>
+                            <Card  
+                                key={product._id}   
+                                title={product.productName}
+                                brand={product.brand}
+                                category={product.categoryId?.categoryName} />
                         ))}
                     </div> 
                 )}

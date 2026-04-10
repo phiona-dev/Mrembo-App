@@ -1,21 +1,26 @@
 .categories-grid{
-    display: grid;
+    display: flex;
     grid-template-columns: repeat(3,1fr);
     border: 1 px solid #ccc;
     gap: 40px;
+    flex-wrap: wrap;
     margin-left: 40px;
     margin-right: 40px;
+    margin-top: 40px;
 }
 
-.card{
+.category-card{
+    background: #F3EBDD;
+    padding: 12px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.2s ease;
 }
-.card:hover {
-    transform: scale(1.05);
+.category-card:hover {
+    transform: translateY(-3px);
 }
 
-.card:active{
+.category-card:active{
     border: 2px solid #9DC183;
     /*background-color: #F3EBDD;*/
 }
