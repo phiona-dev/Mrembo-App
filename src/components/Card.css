@@ -10,6 +10,10 @@
     cursor: pointer;
     border-radius: 20px;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow: var(--card-shadow);
@@ -20,8 +24,14 @@
   transform: translateY(-5px);
 }
 
+
+.product-img {
+  width: 4rem;
+  height: 5rem;
+  overflow: hidden;
+}
 .product-title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #333;
 }
